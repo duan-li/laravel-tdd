@@ -1,0 +1,40 @@
+FROM alpine:3.16
+
+# version PHP 8.1.22
+
+RUN adduser -S -G www-data www-data \
+	&& apk add --update --no-cache tzdata git \
+	php8 \
+    php8-pear \
+	php8-fpm \
+	php8-bcmath \
+	php8-ctype \
+	php8-json \
+	php8-mbstring \
+	php8-openssl \
+	php8-tokenizer \
+	php8-xml \
+	php8-pdo \
+	php8-pdo_mysql \
+	php8-pdo_sqlite \
+	php8-pecl-redis \
+	php8-pecl-memcached \
+	php8-pecl-xdebug \
+	php8-curl \
+	php8-session \
+	php8-gd \
+	php8-opcache \
+	php8-common \
+	php8-zip \
+	php8-fileinfo \
+	composer \
+	&& rm -rf /var/cache/apk/* \
+	&& rm /usr/bin/php \
+	&& ln -s php8 /usr/bin/php \
+	&& ln -s /usr/share/zoneinfo/Australia/Melbourne /etc/localtime \
+	&& echo "Australia/Melbourne" > /etc/timezone \
+    && chmod 777 /etc/localtime
+
+ENTRYPOINT ["/usr/bin/php"]
+
+CMD ["-v"]
