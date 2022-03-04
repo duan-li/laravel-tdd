@@ -11,6 +11,35 @@ services:
     volumes:
       - .:/var/www
   
+  server:
+    image: laravel-php:8.1
+    build:
+      dockerfile: ./.docker/dockerfile.php8.1.local
+    entrypoint:
+      - php
+      - artisan
+      - serve
+    command: "--host=0.0.0.0 --port=8800"
+    working_dir: "/var/www"
+    volumes:
+      - .:/var/www
+    ports:
+      - 8800:8800
+
+  artisan:
+    image: laravel-php:8.1
+    build:
+      dockerfile: ./.docker/dockerfile.php8.1.local
+    entrypoint:
+      - php
+      - artisan
+    command: "list"
+    working_dir: "/var/www"
+    volumes:
+      - .:/var/www
+    ports:
+      - 8800:8800
+
   composer:
     image: laravel-php:8.1
     build:
